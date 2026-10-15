@@ -16,6 +16,10 @@ const API_SERVERS = [
   "https://at1.api.radio-browser.info",
 ];
 
+// Detect if running inside Electron (desktop EXE)
+const isElectron = typeof window !== "undefined" &&
+  window.navigator.userAgent.toLowerCase().includes("electron");
+
 async function fetchBangladeshStations() {
   for (const server of API_SERVERS) {
     try {
@@ -108,13 +112,18 @@ export default function App() {
     setIsFetching(true);
     fetchBangladeshStations()
       .then((data) => {
-        // Deduplicate by normalized name — keep highest votes
         const nameMap = new Map();
         for (const s of data) {
-          if (!(s.url_resolved || s.url)) continue;
+          const streamUrl = s.url_resolved || s.url || "";
+          if (!streamUrl) continue;
+
+          // Web (Vercel/browser): HTTPS only — HTTP streams blocked by browser mixed-content policy
+          // Electron (desktop EXE): allow all (webSecurity: false)
+          if (!isElectron && !streamUrl.startsWith("https://")) continue;
+
           const enriched = enrichStation(s);
-          // Only keep stations that have a known FM frequency
-          if (!enriched.frequency) continue;
+          if (!enriched.frequency) continue; // only real FM stations
+
           const key = s.name.toLowerCase().replace(/[^a-z0-9]/g, "");
           const existing = nameMap.get(key);
           if (!existing || s.votes > existing.votes) {
