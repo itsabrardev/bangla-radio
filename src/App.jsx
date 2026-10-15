@@ -40,6 +40,15 @@ async function registerPlay(stationuuid) {
   } catch {}
 }
 
+// Proxy HTTP streams through our Vercel Edge Function so browsers allow them
+function proxyUrl(url) {
+  if (!url) return url;
+  // In Electron: direct connection (webSecurity: false allows HTTP)
+  // In browser on HTTPS: proxy HTTP streams to avoid Mixed Content block
+  if (isElectron || url.startsWith("https://")) return url;
+  return `/api/stream?url=${encodeURIComponent(url)}`;
+}
+
 // Auto-extract frequency from station name (e.g. "Jago FM 94.4" → "94.4 FM")
 function extractFreqFromName(name) {
   const m = name.match(/(\d{2,3}(?:\.\d+)?)\s*(?:FM|fm)/i);
@@ -130,10 +139,6 @@ export default function App() {
           const streamUrl = s.url_resolved || s.url || "";
           if (!streamUrl) continue;
 
-          // Web: HTTPS streams only (browser blocks HTTP on HTTPS pages)
-          // Electron desktop: allow all (webSecurity: false)
-          if (!isElectron && !streamUrl.startsWith("https://")) continue;
-
           const enriched = enrichStation(s);
           const key = s.name.toLowerCase().replace(/[^a-z0-9]/g, "");
           const existing = nameMap.get(key);
@@ -174,7 +179,7 @@ export default function App() {
       audioRef.current = null;
     }
 
-    const url = station.url_resolved || station.url;
+    const url = proxyUrl(station.url_resolved || station.url);
     const audio = new Audio();
     audio.volume = isMuted ? 0 : volume;
     audio.crossOrigin = "anonymous";
