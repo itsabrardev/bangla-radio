@@ -40,6 +40,12 @@ async function registerPlay(stationuuid) {
   } catch {}
 }
 
+// Auto-extract frequency from station name (e.g. "Jago FM 94.4" → "94.4 FM")
+function extractFreqFromName(name) {
+  const m = name.match(/(\d{2,3}(?:\.\d+)?)\s*(?:FM|fm)/i);
+  return m ? `${m[1]} FM` : "";
+}
+
 // Match API station to local metadata
 function enrichStation(apiStation) {
   const nameLower = apiStation.name.toLowerCase();
@@ -51,7 +57,14 @@ function enrichStation(apiStation) {
       return { ...apiStation, ...meta };
     }
   }
-  return { ...apiStation, frequency: "", category: "অন্যান্য", color: "#4B5563" };
+  // No metadata match — try to extract frequency from name
+  const autoFreq = extractFreqFromName(apiStation.name);
+  return {
+    ...apiStation,
+    frequency: autoFreq,
+    category: autoFreq ? "বিনোদন" : "অনলাইন",
+    color: "#4B5563",
+  };
 }
 
 // ─── Media Session (OS notification / lock screen controls) ──────────────────
@@ -107,7 +120,7 @@ export default function App() {
     return () => clearInterval(t);
   }, []);
 
-  // Fetch + deduplicate + filter only FM stations (with known frequency)
+  // Fetch + deduplicate stations
   useEffect(() => {
     setIsFetching(true);
     fetchBangladeshStations()
@@ -117,13 +130,11 @@ export default function App() {
           const streamUrl = s.url_resolved || s.url || "";
           if (!streamUrl) continue;
 
-          // Web (Vercel/browser): HTTPS only — HTTP streams blocked by browser mixed-content policy
-          // Electron (desktop EXE): allow all (webSecurity: false)
+          // Web: HTTPS streams only (browser blocks HTTP on HTTPS pages)
+          // Electron desktop: allow all (webSecurity: false)
           if (!isElectron && !streamUrl.startsWith("https://")) continue;
 
           const enriched = enrichStation(s);
-          if (!enriched.frequency) continue; // only real FM stations
-
           const key = s.name.toLowerCase().replace(/[^a-z0-9]/g, "");
           const existing = nameMap.get(key);
           if (!existing || s.votes > existing.votes) {
