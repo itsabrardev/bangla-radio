@@ -1,0 +1,27 @@
+{
+  "appId": "com.banglaradio.app",
+  "appName": "BanglaRadio",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https",
+    "allowNavigation": [
+      "*.digitalsynapsebd.com",
+      "*.zeno.fm",
+      "*.radiojar.com",
+      "*.spicefmbd.com",
+      "*.streamtheworld.com",
+      "118.179.215.45",
+      "139.59.86.99"
+    ]
+  },
+  "android": {
+    "allowMixedContent": true,
+    "backgroundColor": "#0a0e1a",
+    "appendUserAgent": "BanglaRadio/1.0"
+  },
+  "plugins": {
+    "CapacitorHttp": {
+      "enabled": true
+    }
+  }
+}

@@ -1,0 +1,96 @@
+/* ════════════════════════════════════════
+   BANGLA RADIO — Additional / Updated CSS
+   ════════════════════════════════════════ */
+
+/* Skeleton loading cards */
+.loading-placeholder { padding: 4px; }
+
+.skeleton-card {
+  height: 70px;
+  border-radius: 10px;
+  background: linear-gradient(
+    90deg,
+    var(--bg-card) 25%,
+    var(--bg-hover) 50%,
+    var(--bg-card) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+  margin-bottom: 6px;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Station favicon image */
+.station-favicon {
+  width: 60px;
+  height: 60px;
+  border-radius: 14px;
+  object-fit: cover;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+}
+
+/* Station meta (bitrate / codec) */
+.station-meta {
+  display: flex;
+  gap: 5px;
+  margin-top: 3px;
+  flex-wrap: wrap;
+}
+
+.bitrate-badge, .codec-badge {
+  font-size: 0.6rem;
+  padding: 1px 6px;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.07);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+
+/* Player badges row */
+.player-badges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+  align-items: center;
+}
+
+.quality-badge {
+  background: rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.9);
+  font-size: 0.72rem;
+  padding: 3px 10px;
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
+}
+
+/* Fetch error text */
+.fetch-error {
+  color: #fca5a5;
+}
+
+/* Status fetching indicator */
+.status-fetching {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #60a5fa;
+}
+
+/* Stream info footer */
+.stream-info {
+  text-align: center;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  padding: 6px;
+  border-top: 1px solid var(--border);
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}

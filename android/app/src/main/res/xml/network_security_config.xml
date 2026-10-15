@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- Allow cleartext (HTTP) traffic for radio streams -->
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+    <!-- Specific radio streaming domains -->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">digitalsynapsebd.com</domain>
+        <domain includeSubdomains="true">zeno.fm</domain>
+        <domain includeSubdomains="true">radiojar.com</domain>
+        <domain includeSubdomains="true">spicefmbd.com</domain>
+        <domain includeSubdomains="true">streamtheworld.com</domain>
+        <domain includeSubdomains="false">118.179.215.45</domain>
+        <domain includeSubdomains="false">139.59.86.99</domain>
+    </domain-config>
+</network-security-config>

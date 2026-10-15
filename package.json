@@ -1,0 +1,88 @@
+{
+  "name": "bangla-radio",
+  "productName": "বাংলা রেডিও",
+  "private": true,
+  "version": "1.0.0",
+  "description": "বাংলাদেশের সকল FM রেডিও স্টেশন — ইন্টারনেটে সরাসরি",
+  "author": "Bangla Radio",
+  "main": "electron/main.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "electron:dev": "concurrently \"cross-env NODE_ENV=development vite\" \"wait-on http://localhost:5173 && cross-env NODE_ENV=development electron .\"",
+    "electron:build": "vite build && electron-packager . \"BanglaRadio\" --platform=win32 --arch=x64 --out=release --overwrite --electron-version=44.7.2 --ignore=node_modules/.cache --ignore=android --ignore=src --ignore=release",
+    "electron:build:mac": "vite build && electron-packager . \"BanglaRadio\" --platform=darwin --arch=x64 --out=release --overwrite --electron-version=44.7.2 --ignore=node_modules/.cache --ignore=android --ignore=src --ignore=release",
+    "electron:build:linux": "vite build && electron-packager . \"BanglaRadio\" --platform=linux --arch=x64 --out=release --overwrite --electron-version=44.7.2 --ignore=node_modules/.cache --ignore=android --ignore=src --ignore=release"
+  },
+  "build": {
+    "appId": "com.banglaradio.app",
+    "productName": "বাংলা রেডিও",
+    "copyright": "Copyright © 2024 Bangla Radio",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "public/**/*"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "public/icon.ico",
+      "requestedExecutionLevel": "asInvoker"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "public/icon.ico",
+      "uninstallerIcon": "public/icon.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "বাংলা রেডিও"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "public/icon.icns",
+      "category": "public.app-category.music"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "public/icon.png",
+      "category": "Audio"
+    }
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.5.3",
+    "@capacitor/cli": "^8.5.3",
+    "@capacitor/core": "^8.5.3",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "@electron/packager": "^20.3.0",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "@vitejs/plugin-react": "^6.1.1",
+    "concurrently": "^10.0.6",
+    "cross-env": "^10.1.0",
+    "electron": "^44.7.2",
+    "electron-builder": "^26.15.3",
+    "oxlint": "^1.81.0",
+    "vite": "^8.3.0",
+    "wait-on": "^9.5.1"
+  }
+}

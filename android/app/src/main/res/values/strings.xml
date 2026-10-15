@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">BanglaRadio</string>
+    <string name="title_activity_main">BanglaRadio</string>
+    <string name="package_name">com.banglaradio.app</string>
+    <string name="custom_url_scheme">com.banglaradio.app</string>
+</resources>

@@ -1,0 +1,37 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+release/
+
+# Android build
+android/build/
+android/.gradle/
+android/app/build/
+android/local.properties
+
+# Capacitor
+.capacitor/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Electron builder cache
+electron-builder-cache/

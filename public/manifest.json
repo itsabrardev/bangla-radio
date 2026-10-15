@@ -1,0 +1,19 @@
+{
+  "name": "বাংলা রেডিও",
+  "short_name": "বাংলা রেডিও",
+  "description": "বাংলাদেশের সকল FM রেডিও স্টেশন",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0e1a",
+  "theme_color": "#3b82f6",
+  "orientation": "portrait-primary",
+  "lang": "bn",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
